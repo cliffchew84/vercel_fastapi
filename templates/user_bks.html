@@ -1,0 +1,48 @@
+<style>
+    .card.htmx-swapping {
+        opacity: 0;
+        transition: opacity 2s ease-out;
+    }
+</style>
+
+
+<div class="main_content">
+    <div class="pt-8 mt-8 sm:px-20 xl:px-40"></div>
+    <div class="w-full overflow-x-auto my-3 pt-2">
+        <div class="mx-auto max-w-screen-lg px-4">
+            <input class="mx-auto md:text-base text-sm form-control w-full rounded-lg p-2 my-2 border-2 border-sky-700"
+                id="myInput" type="text" placeholder="Search your saved books by keywords in their title!">
+
+            {% for data in api_data %}
+            <div class="card w-full card-bordered card-compact">
+                <div class="card-body">
+                    <div class="flex items-center">
+                        <p class="flex-grow px-2">
+                            <a href="https://catalogue.nlb.gov.sg/search/card?recordId={{data['BID']}}"
+                                class="hidden md:block text-blue-800 hover:text-blue-600 font-semibold underline"
+                                target="_blank" rel="noopener noreferrer">{{ loop.index }} - {{
+                                data['TitleName'].split(" | ", 1)[0] }}</a>
+
+                            <a href="https://catalogue.nlb.gov.sg/search/card?recordId={{data['BID']}}"
+                                class="md:hidden block text-blue-800 hover:text-blue-600 font-semibold underline"
+                                target="_blank" rel="noopener noreferrer">{{ loop.index }} - {{
+                                data['TitleName'].split(" : ", 1)[0] }}</a>
+
+                            <span class="badge badge-outline">{{ data['CallNumber'] }}</span>
+                            <b>Author:</b> {{ data['Author'] }}
+                            <span>
+                                <button class="text-sky-700 hover:text-red-400" hx-delete="/delete_bk/{{data['BID']}}"
+                                    hx-swap='outerHTML' hx-indicator="#head-spinner" hx-target="closest .card">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
