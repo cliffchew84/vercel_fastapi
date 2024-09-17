@@ -1,0 +1,73 @@
+<div class='main_content'>
+    <div class='pt-2 mt-20 items-center justify-center px-2 h-full'>
+        <form method="GET" hx-target="next .search_table" hx-get="/htmx_search" hx-indicator="#head-spinner">
+
+            <div class="flex justify-center items-center space-x-2 pt-2">
+                <input type="checkbox" id="e_resources" name="e_resources" value=True
+                    class="form-control checkbox checkbox-xs checkbox-info hover:bg-sky-500 border-sky-500" />
+                <label for="e_resources">Include eResources**</label>
+            </div>
+
+            <div class="join form-inline flex items-center justify-center">
+                {% if keyword %}
+                <input placeholder="Title / ISBN" type="search" id="book_search" name="book_search"
+                    class="join-item flex mt-2 px-2 py-2 w-1/2 md:text-base text-sm form-control rounded-lg border-2 border-sky-700"
+                    value="{{keyword|safe}}" />
+
+                {% else %}
+
+                <input placeholder="Title / ISBN" type="search" id="book_search" name="book_search"
+                    class="join-item flex mt-2 px-2 py-2 w-1/2 md:text-base text-sm form-control rounded-lg border-2 border-sky-700" />
+
+                {% endif %}
+
+                {% if author %}
+                <input placeholder="Author (Optional)" type="search" id="author" name="author" value="{{author|safe}}"
+                    class="join-item flex mt-2 px-2 py-2 md:w-1/4 w-1/2 md:text-base text-sm
+                           form-control rounded-lg border-2 border-sky-700" />
+
+                {% else %}
+
+                <input placeholder="Author (Optional)" type="search" id="author" name="author" class="join-item flex mt-2 px-2 py-2 md:w-1/4 w-1/2 md:text-base text-sm
+                           form-control rounded-lg border-2 border-sky-700" />
+
+                {% endif %}
+
+                <!--Search button-->
+                <button type="submit" class="join-item flex items-center bg-sky-700 mt-2 px-2 py-2 rounded-lg 
+                                             hover:text-white hover:bg-sky-500 text-white">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        <p class='mx-auto flex justify-center text-sm italic px-2'>
+            *Search is provided by NLB. Please use [ISBN] OR [Title] OR [Author] to refine search results.
+        </p>
+    </div>
+
+    <div class="mx-auto max-w-screen-lg px-4 mt-3">
+        <!-- Search Results -->
+        <div class="search_table"></div>
+    </div>
+
+    <script>
+        function checkSelection() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            var submitButton = document.getElementById("submitButton");
+            var atLeastOneChecked = false;
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    atLeastOneChecked = true;
+                }
+            });
+
+            if (atLeastOneChecked) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+    </script>
+</div>
