@@ -84,14 +84,14 @@ app = FastAPI()
 app.mount('/static', StaticFiles(directory='static'), name='static')
 templates = Jinja2Templates(directory='templates')
 
-manager.not_authenticated_exception = NotAuthenticationException
-app.add_exception_handler(NotAuthenticationException,
-                          not_authenticated_exception_handler)
-
-# Define an error handler to render the error page
-@app.exception_handler(HTTPException)
-async def handle_http_exception(request: Request, exc: HTTPException):
-    return templates.TemplateResponse("error.html", {"request": request})
+# manager.not_authenticated_exception = NotAuthenticationException
+# app.add_exception_handler(NotAuthenticationException,
+#                           not_authenticated_exception_handler)
+#
+# # Define an error handler to render the error page
+# @app.exception_handler(HTTPException)
+# async def handle_http_exception(request: Request, exc: HTTPException):
+#     return templates.TemplateResponse("error.html", {"request": request})
 
 
 # Example route that triggers an internal server error
