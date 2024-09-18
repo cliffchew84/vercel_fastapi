@@ -1,5 +1,5 @@
 {
-    "engines": {
-        "node": "18.x"
-    }
+  "devDependencies": {
+    "tailwindcss": "^3.4.7"
+  }
 }
